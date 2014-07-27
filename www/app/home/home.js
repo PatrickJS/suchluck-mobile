@@ -7,7 +7,8 @@ angular.module('home', [])
     url: '/home',
     views: {
       'main': {
-        templateUrl: 'app/home/home.html'
+        templateUrl: 'app/home/home.html',
+        controller: 'HomeCtrl'
       }
     }
   });
@@ -16,5 +17,17 @@ angular.module('home', [])
 
 .controller('HomeCtrl', function($scope) {
   console.log('HomeCtrl');
+
+  $scope.dogecoin = 0;
+
+  $scope.step = 100;
+
+  $scope.up = function() {
+    $scope.dogecoin += $scope.step;
+  };
+
+  $scope.down = function() {
+    $scope.dogecoin -= $scope.step;
+  };
 
 });

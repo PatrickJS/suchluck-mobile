@@ -23,7 +23,7 @@ angular.module('suchApp', [
   $scope.loginData = {};
 
   // Create the login modal that we will use later
-  var modal = $ionicModal.fromTemplateUrl('app/login.html', { scope: $scope });
+  var modal = $ionicModal.fromTemplateUrl('app/auth/login.html', { scope: $scope });
   modal.then(function(modal) {
     $scope.modal = modal;
   });

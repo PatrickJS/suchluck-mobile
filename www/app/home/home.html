@@ -4,10 +4,26 @@
     <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
 
-  <ion-content class="has-header">
+  <ion-content class="has-header has-footer">
 
-    yolo
+    {{ dogecoin }}
+    {{ step }}
 
   </ion-content>
+
+  <ion-footer-bar align-title="left" class="bar-positive">
+    <div class="buttons" ng-click="submit()">
+      <button class="button">Doge!</button>
+    </div>
+    <h1 class="title">&#272; {{ dogecoin }}</h1>
+    <div class="buttons">
+      <button class="button" ng-click="down()" style="min-width:5em">
+        -
+      </button>
+      <button class="button" ng-click="up()" style="min-width:5em">
+        +
+      </button>
+    </div>
+  </ion-footer-bar>
 
 </ion-view>
