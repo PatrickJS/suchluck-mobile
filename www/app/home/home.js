@@ -27,7 +27,9 @@ angular.module('home', [])
   };
 
   $scope.down = function() {
-    $scope.dogecoin -= $scope.step;
+    if ($scope.dogecoin) {
+      $scope.dogecoin -= $scope.step;
+    }
   };
 
 });

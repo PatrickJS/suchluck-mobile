@@ -3,6 +3,10 @@ angular.module('suchApp', [
 
   'home'
 ])
+.config(function($httpProvider) {
+  $httpProvider.defaults.useXDomain = true;
+  delete $httpProvider.defaults.headers.common['X-Requested-With'];
+})
 
 .config(function($stateProvider, $urlRouterProvider) {
 
@@ -19,10 +23,10 @@ angular.module('suchApp', [
 })
 
 .factory('User', function($http) {
-
+  var baseUrl = 'http://156d2b91.ngrok.com';
   return {
     login: function(input) {
-      return $http.post('/api/login', {
+      return $http.post(baseUrl + '/api/login', {
         username: input.username,
         password: input.password
       }).then(function(res) {
@@ -57,6 +61,12 @@ angular.module('suchApp', [
     $scope.modal.show();
   };
 
+  $scope.logout = function() {
+    console.log('Logout');
+    User.logout();
+    $scope.modal.show();
+  };
+
   // Perform the login action when the user submits the login form
   $scope.doLogin = function(input) {
     console.log('Doing login', $scope.loginData);
@@ -82,30 +92,30 @@ angular.module('suchApp', [
   // Create the login modal that we will use later
   // var signup = $ionicModal.fromTemplateUrl('app/auth/signup.html', { scope: $scope });
   // signup.then(function(modal) {
-  //   $scope.modal = modal;
+  //   $scope.signup = modal;
   // });
 
-  // Triggered in the login modal to close it
-  $scope.closeSignup = function() {
-    $scope.modal.hide();
-  };
+  // // Triggered in the login modal to close it
+  // $scope.closeSignup = function() {
+  //   $scope.signup.hide();
+  // };
 
-  // Open the Signup modal
-  $scope.signup = function() {
-    $scope.modal.show();
-  };
+  // // Open the Signup modal
+  // $scope.signup = function() {
+  //   $scope.signup.show();
+  // };
 
-  // Perform the Signup action when the user submits the Signup form
-  $scope.doSignup = function() {
-    console.log('Doing login', $scope.loginData);
+  // // Perform the Signup action when the user submits the Signup form
+  // $scope.doSignup = function() {
+  //   console.log('Doing login', $scope.loginData);
 
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
+  //   // Simulate a login delay. Remove this and replace with your login
+  //   // code if using a login system
+  //   $timeout(function() {
+  //     $scope.closeSignup();
+  //   }, 1000);
 
-  };
+  // };
 
 
 })
