@@ -22,10 +22,14 @@ angular.module('suchApp', [
   $urlRouterProvider.otherwise('/app/home');
 })
 
-.factory('authInterceptor', function ($rootScope, $q, $window, User) {
+.factory('authInterceptor', function ($rootScope, $q, $window, $injector) {
+  var User = null;
   return {
     request: function (config) {
       config.headers = config.headers || {};
+      if (!User) {
+        User = $injector.get('User');
+      }
       if (User.isAuthenticated()) {
         config.headers.Authorization = 'Bearer ' + User.getToken();
       }
@@ -33,6 +37,9 @@ angular.module('suchApp', [
     },
     response: function (response) {
       if (response.status === 401) {
+        if (!User) {
+          User = $injector.get('User');
+        }
         // handle the case where the user is not authenticated
         User.logout();
       }
@@ -65,6 +72,7 @@ angular.module('suchApp', [
       }).then(function(res) {
         console.log('token', res.data.token);
         token = res.data.token;
+        delete res.data.token;
         $window.sessionStorage.suchLuckToken = token;
         return res.data;
       });
@@ -108,6 +116,7 @@ angular.module('suchApp', [
 
   // Perform the login action when the user submits the login form
   $scope.doLogin = function(input) {
+    $scope.disable = true;
     console.log('Doing login', $scope.loginData);
 
     User.login({
@@ -115,13 +124,15 @@ angular.module('suchApp', [
       password: input.password
     })
     .then(function(response) {
-      console.log('token', response.token);
-
+      console.log('response', response);
       $scope.closeLogin();
-
     })
     .catch(function(err) {
       console.log('err', err);
+    })
+    .finally(function() {
+      $scope.disable = false;
+      $scope.loginData = {};
     });
 
     // Simulate a login delay. Remove this and replace with your login
