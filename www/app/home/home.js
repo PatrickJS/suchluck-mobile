@@ -15,21 +15,9 @@ angular.module('home', [])
 
 })
 
-.controller('HomeCtrl', function($scope) {
+.controller('HomeCtrl', function($scope, Doge) {
   console.log('HomeCtrl');
 
-  $scope.dogecoin = 0;
-
-  $scope.step = 100;
-
-  $scope.up = function() {
-    $scope.dogecoin += $scope.step;
-  };
-
-  $scope.down = function() {
-    if ($scope.dogecoin) {
-      $scope.dogecoin -= $scope.step;
-    }
-  };
+  $scope.doge = Doge;
 
 });

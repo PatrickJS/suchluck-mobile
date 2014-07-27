@@ -86,6 +86,33 @@ angular.module('suchApp', [
 
 })
 
+.factory('Doge', function() {
+
+  var cache = {
+    step: 100,
+    coin: 0
+  };
+
+
+  return {
+    coin: cache.coin,
+    step: cache.step,
+    get: function(type) {
+      return cache[type];
+    },
+    up: function() {
+      cache.coin += cache.step;
+    },
+    down: function() {
+      if (cache.coin) {
+        cache.coin -= cache.step;
+      }
+
+    }
+  };
+
+})
+
 .controller('AppCtrl', function($scope, $ionicModal, $timeout, User) {
   // Form data for the login modal
   $scope.loginData = {};

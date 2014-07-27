@@ -6,8 +6,8 @@
 
   <ion-content class="has-header has-footer">
 
-    {{ dogecoin }}
-    {{ step }}
+    {{ doge.get('coin') }}
+    {{ doge.get('step') }}
 
   </ion-content>
 
@@ -15,12 +15,12 @@
     <div class="buttons" ng-click="submit()">
       <button class="button">Doge!</button>
     </div>
-    <h1 class="title">&#272; {{ dogecoin }}</h1>
+    <h1 class="title">&#272; {{ doge.get('coin') }}</h1>
     <div class="buttons">
-      <button class="button" ng-click="down()" style="min-width:5em">
+      <button class="button" ng-click="doge.down()" style="min-width:5em">
         -
       </button>
-      <button class="button" ng-click="up()" style="min-width:5em">
+      <button class="button" ng-click="doge.up()" style="min-width:5em">
         +
       </button>
     </div>
