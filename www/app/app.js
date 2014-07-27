@@ -22,19 +22,29 @@ angular.module('suchApp', [
   $urlRouterProvider.otherwise('/app/home');
 })
 
-.factory('User', function($http) {
+.factory('User', function($http, $window) {
+
   var baseUrl = 'http://156d2b91.ngrok.com';
+  var token = $window.sessionStorage.suchLuckToken || null;
+
   return {
+    isAuthenticated: function() {
+      return !!token;
+    },
     login: function(input) {
       return $http.post(baseUrl + '/api/login', {
         username: input.username,
         password: input.password
       }).then(function(res) {
+        console.log('token', res.data.token);
+        token = res.data.token;
+        $window.sessionStorage.suchLuckToken = token;
         return res.data;
       });
     },
     logout: function() {
-
+      token = null;
+      $window.sessionStorage.suchLuckToken = null;
     }
 
   };
@@ -44,6 +54,8 @@ angular.module('suchApp', [
 .controller('AppCtrl', function($scope, $ionicModal, $timeout, User) {
   // Form data for the login modal
   $scope.loginData = {};
+
+  $scope.isAuthenticated = User.isAuthenticated;
 
   // Create the login modal that we will use later
   var login = $ionicModal.fromTemplateUrl('app/auth/login.html', { scope: $scope });
@@ -76,9 +88,13 @@ angular.module('suchApp', [
       password: input.password
     })
     .then(function(response) {
-      console.log(response);
+      console.log('token', response.token);
+
       $scope.closeLogin();
 
+    })
+    .catch(function(err) {
+      console.log('err', err);
     });
 
     // Simulate a login delay. Remove this and replace with your login

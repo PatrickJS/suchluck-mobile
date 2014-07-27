@@ -12,18 +12,18 @@
   </style>
 
   <ion-header-bar>
-    <div class="buttons pull-right">
+    <div class="buttons pull-right" ng-show="isAuthenticated()">
       <button class="button button-clear" ng-click="closeLogin()">Close</button>
     </div>
   </ion-header-bar>
   <ion-content>
 
     <center>
-      <img src="img/doge.png">
+      <img src="img/doge.png" width="50%">
       <h1>Such Luck</h1>
     </center>
 
-    <form ng-submit="doLogin(loginData)">
+    <form name="loginForm" ng-submit="doLogin(loginData)">
 
       <div class="list">
         <label class="item item-input">

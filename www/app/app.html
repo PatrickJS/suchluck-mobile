@@ -22,13 +22,13 @@
 
     <ion-content class="has-header">
       <ion-list>
-        <ion-item nav-clear menu-close ng-click="login()">
+        <ion-item nav-clear menu-close ng-click="login()" ng-hide="isAuthenticated()">
           Login
         </ion-item>
         <ion-item nav-clear menu-close href="#/app/home">
           Home
         </ion-item>
-        <ion-item nav-clear menu-close ng-click="logout()">
+        <ion-item nav-clear menu-close ng-click="logout()" ng-show="isAuthenticated()">
           Logout
         </ion-item>
       </ion-list>
