@@ -22,6 +22,30 @@ angular.module('suchApp', [
   $urlRouterProvider.otherwise('/app/home');
 })
 
+.factory('authInterceptor', function ($rootScope, $q, $window, User) {
+  return {
+    request: function (config) {
+      config.headers = config.headers || {};
+      if (User.isAuthenticated()) {
+        config.headers.Authorization = 'Bearer ' + User.getToken();
+      }
+      return config;
+    },
+    response: function (response) {
+      if (response.status === 401) {
+        // handle the case where the user is not authenticated
+        User.logout();
+      }
+      return response || $q.when(response);
+    }
+  };
+
+})
+
+.config(function ($httpProvider) {
+  $httpProvider.interceptors.push('authInterceptor');
+})
+
 .factory('User', function($http, $window) {
 
   var baseUrl = 'http://156d2b91.ngrok.com';
@@ -30,6 +54,9 @@ angular.module('suchApp', [
   return {
     isAuthenticated: function() {
       return !!token;
+    },
+    getToken: function() {
+      return token;
     },
     login: function(input) {
       return $http.post(baseUrl + '/api/login', {
