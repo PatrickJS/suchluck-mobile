@@ -4,7 +4,7 @@ angular.module('home', [])
 
   $stateProvider
   .state('app.home', {
-    url: '/search',
+    url: '/home',
     views: {
       'main': {
         templateUrl: 'app/home/home.html'
