@@ -7,7 +7,7 @@ angular.module('app.home', [])
     url: '/search',
     views: {
       'main': {
-        templateUrl: 'app/auth/home/home.html'
+        templateUrl: 'app/home/home.html'
       }
     }
   });

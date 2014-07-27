@@ -23,8 +23,8 @@ angular.module('suchApp', [
   $scope.loginData = {};
 
   // Create the login modal that we will use later
-  var model = $ionicModal.fromTemplateUrl('app/login.html', { scope: $scope });
-  model.then(function(modal) {
+  var modal = $ionicModal.fromTemplateUrl('app/login.html', { scope: $scope });
+  modal.then(function(modal) {
     $scope.modal = modal;
   });
 
@@ -47,6 +47,7 @@ angular.module('suchApp', [
     $timeout(function() {
       $scope.closeLogin();
     }, 1000);
+
   };
 
 })
