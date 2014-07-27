@@ -1,7 +1,7 @@
 angular.module('suchApp', [
   'ionic',
-  'app.login',
-  'app.home'
+
+  'home'
 ])
 
 .config(function($stateProvider, $urlRouterProvider) {
