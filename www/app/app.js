@@ -162,12 +162,6 @@ angular.module('suchApp', [
       $scope.loginData = {};
     });
 
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
-
   };
 
   // Create the login modal that we will use later
