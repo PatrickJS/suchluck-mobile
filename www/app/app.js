@@ -18,13 +18,32 @@ angular.module('suchApp', [
   $urlRouterProvider.otherwise('/app/home');
 })
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.factory('User', function($http) {
+
+  return {
+    login: function(input) {
+      return $http.post('/api/login', {
+        username: input.username,
+        password: input.password
+      }).then(function(res) {
+        return res.data;
+      });
+    },
+    logout: function() {
+
+    }
+
+  };
+
+})
+
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, User) {
   // Form data for the login modal
   $scope.loginData = {};
 
   // Create the login modal that we will use later
-  var modal = $ionicModal.fromTemplateUrl('app/auth/login.html', { scope: $scope });
-  modal.then(function(modal) {
+  var login = $ionicModal.fromTemplateUrl('app/auth/login.html', { scope: $scope });
+  login.then(function(modal) {
     $scope.modal = modal;
   });
 
@@ -39,7 +58,45 @@ angular.module('suchApp', [
   };
 
   // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
+  $scope.doLogin = function(input) {
+    console.log('Doing login', $scope.loginData);
+
+    User.login({
+      username: input.username,
+      password: input.password
+    })
+    .then(function(response) {
+      console.log(response);
+      $scope.closeLogin();
+
+    });
+
+    // Simulate a login delay. Remove this and replace with your login
+    // code if using a login system
+    $timeout(function() {
+      $scope.closeLogin();
+    }, 1000);
+
+  };
+
+  // Create the login modal that we will use later
+  // var signup = $ionicModal.fromTemplateUrl('app/auth/signup.html', { scope: $scope });
+  // signup.then(function(modal) {
+  //   $scope.modal = modal;
+  // });
+
+  // Triggered in the login modal to close it
+  $scope.closeSignup = function() {
+    $scope.modal.hide();
+  };
+
+  // Open the Signup modal
+  $scope.signup = function() {
+    $scope.modal.show();
+  };
+
+  // Perform the Signup action when the user submits the Signup form
+  $scope.doSignup = function() {
     console.log('Doing login', $scope.loginData);
 
     // Simulate a login delay. Remove this and replace with your login
@@ -49,6 +106,7 @@ angular.module('suchApp', [
     }, 1000);
 
   };
+
 
 })
 
